@@ -61,7 +61,7 @@ do
             ]
             }'
 
-            echo "record updated for the "$INSTANCENAME"
+            echo "record updated for the $INSTANCENAME"
 done
 
 
