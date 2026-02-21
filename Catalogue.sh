@@ -72,3 +72,5 @@ systemctl daemon-reload
 systemctl enable catalogue 
 systemctl start catalogue
 VALIDATE $? "reload enable Start catalogue"
+
+echo "completed"
