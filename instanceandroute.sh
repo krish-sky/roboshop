@@ -9,14 +9,14 @@ DOMAIN="Krishsky.online"
 
 for INSTANCENAME in "$@"
 do 
-    INSTANCEID=$(aws ec2 run-instances \
+    INSTANCEID=$( aws ec2 run-instances \
         --image-id $AMI_ID \
         --instance-type t3.micro \
         --security-group-ids $SG_ID \
         --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCENAME}]" \
         --query 'Instances[0].InstanceId' \
-        --output text)
-
+        --output text )
+    
         aws ec2 wait instance-status-ok --instance-ids $INSTANCEID
     
     if [ "$INSTANCENAME" = "frontend" ]; then
