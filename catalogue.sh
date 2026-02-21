@@ -5,6 +5,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPTDIR=$PWD
+MONGOBDIP="mongodb.krishsky.online"
 
 R="\e[31m"
 G="\e[32m"
@@ -62,7 +63,7 @@ unzip /tmp/catalogue.zip
 VALIDATE $? "Unzip code"
 
 
-npm install 
+npm install  &>>$LOGS_FILE
 VALIDATE $? "npm install"
 
 cp $SCRIPTDIR/catalogue.service /etc/systemd/system/catalogue.service
@@ -75,9 +76,16 @@ VALIDATE $? "reload enable Start catalogue"
 
 cp $SCRIPTDIR/mongo.repo /etc/yum.repos.d/mongo.repo
 
-dnf install mongodb-org -y 
+dnf install mongodb-org -y &>>$LOGS_FILE
 VALIDATE $? "mongodb-org install"
 
-systemctl enable mongod 
-systemctl start mongod 
-VALIDATE $? "enable and start"
+INDEX=$(mongosh --host $MONGOBDIP --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+
+if [ $INDEX -ne 0 ]; then
+    mongosh --host $MONGOBDI </app/db/master-data.js
+else
+    echo -e "Product already exist... $Y skipping $N"
+fi
+
+systemctl restart catalogue
+VALIDATE $? "Restarting catalogue"
