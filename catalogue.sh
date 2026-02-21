@@ -73,4 +73,11 @@ systemctl enable catalogue
 systemctl start catalogue
 VALIDATE $? "reload enable Start catalogue"
 
-echo "completed"
+cp $SCRIPTDIR/mongo.repo /etc/yum.repos.d/mongo.repo
+
+dnf install mongodb-org -y 
+VALIDATE $? "mongodb-org install"
+
+systemctl enable mongod 
+systemctl start mongod 
+VALIDATE $? "enable and start"
