@@ -30,3 +30,16 @@ VALIDATE "$?" "copying mongo.repo"
 
 dnf install mongodb-org -y   &>>$LOGS_FILE
 VALIDATE "$?" "Mongodb installed"
+
+systemctl enable mongod 
+VALIDATE "$?" "systemctl enable mongodb"
+
+
+systemctl start mongod 
+VALIDATE "$?" "systemctl start mongodb"
+
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+VALIDATE "$? "Allowing remote connections"
+
+systemctl restart mongod
+VALIDATE "$?" "systemctl restart mongodb"   
