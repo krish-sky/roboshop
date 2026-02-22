@@ -19,7 +19,7 @@ do
     
             
     if [ "$INSTANCENAME" = "frontend" ]; then
-        aws ec2 wait instance-status-ok --instance-ids $INSTANCEID
+    
         IP=$(aws ec2 describe-instances \
         --instance-ids $INSTANCEID \
         --query 'Reservations[0].Instances[0].PublicIpAddress' \
