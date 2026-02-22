@@ -5,7 +5,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPTDIR=$PWD
-MONGOBDIP="mongodb.krishsky.online"
+MONGODBIP="mongodb.krishsky.online"
 
 R="\e[31m"
 G="\e[32m"
@@ -79,10 +79,10 @@ cp $SCRIPTDIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-org -y &>>$LOGS_FILE
 VALIDATE $? "mongodb-org install"
 
-INDEX=$(mongosh --host $MONGOBDIP --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+INDEX=$(mongosh --host $MONGODBIP --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $INDEX -ne 0 ]; then
-    mongosh --host $MONGOBDI </app/db/master-data.js
+    mongosh --host $MONGODBIP </app/db/master-data.js
 else
     echo -e "Product already exist... $Y skipping $N"
 fi
