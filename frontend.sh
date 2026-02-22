@@ -5,7 +5,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPTDIR=$PWD
-MONGOBDIP="mongodb.krishsky.online"
+
 
 R="\e[31m"
 G="\e[32m"
@@ -29,16 +29,16 @@ VALIDATE(){
     fi
 }
 
-dnf module disable nginx -y
+dnf module disable nginx -y &>>$LOGS_FILE
 VALIDATE $? "Disable Nginx"
 
-dnf module enable nginx:1.24 -y
+dnf module enable nginx:1.24 -y &>>$LOGS_FILE
 VALIDATE $? "Enable Nginx"
 
-dnf install nginx -y
+dnf install nginx -y &>>$LOGS_FILE
 VALIDATE $? "Installed Nginx"
 
-systemctl enable nginx 
+systemctl enable nginx  &>>$LOGS_FILE
 systemctl start nginx 
 VALIDATE $? "start and enabled Nginx"
 
@@ -61,7 +61,7 @@ VALIDATE $? "Unzip code"
 rm -rf /etc/nginx/nginx.conf
 VALIDATE $? "removing old conf"
 
-cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
+cp $SCRIPTDIR/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "Copied our nginx conf file"
 
 systemctl restart nginx 
