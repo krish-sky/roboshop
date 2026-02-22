@@ -74,9 +74,5 @@ systemctl enable cart
 systemctl start cart
 VALIDATE $? "reload enable and start cart"
 
-cp $SCRIPTDIR/mongo.repo /etc/yum.repos.d/mongo.repo
-
-dnf install mongodb-org -y &>>$LOGS_FILE
-VALIDATE $? "mongodb-org install"
 
 
