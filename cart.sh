@@ -72,7 +72,7 @@ VALIDATE $? "Copying cart.service file"
 systemctl daemon-reload
 systemctl enable cart 
 systemctl start cart
-VALIDATE $? "reload enable and start cart"
+VALIDATE $? "reload enable and started cart"
 
 
 
