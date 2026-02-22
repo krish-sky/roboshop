@@ -5,7 +5,7 @@ USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 SCRIPTDIR=$PWD
-
+MONGOBDIP="mongodb.krishsky.online"
 
 R="\e[31m"
 G="\e[32m"
@@ -28,14 +28,3 @@ VALIDATE(){
         echo -e "$2 ...is $G Success $N" | tee $LOGS_FILE
     fi
 }
-
-dnf install mysql-server -y &>>$LOGS_FILE
-VALIDATE $? "install mysql-serve"
-
-systemctl enable mysqld &>>$LOGS_FILE
-systemctl start mysqld  &>>$LOGS_FILE
-VALIDATE $? "Enable and Start mysql"
-
-mysql_secure_installation --set-root-pass RoboShop@1 
-VALIDATE $? "password setup"
-
