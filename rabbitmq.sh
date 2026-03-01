@@ -49,3 +49,5 @@ fi
 
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOGS_FILE
 VALIDATE $? "Permission set"
+
+Print_total_time

@@ -17,8 +17,7 @@ do
         --query 'Instances[0].InstanceId' \
         --output text )
     
-        aws ec2 wait instance-status-ok --instance-ids $INSTANCEID
-    
+        
     if [ "$INSTANCENAME" = "frontend" ]; then
         IP=$(aws ec2 describe-instances \
         --instance-ids $INSTANCEID \
