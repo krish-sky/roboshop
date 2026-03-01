@@ -15,7 +15,7 @@ do
         --security-group-ids $SG_ID \
         --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCENAME}]" \
         --query 'Instances[0].InstanceId' \
-        --output text )
+        --output text)
     
             
     if [ "$INSTANCENAME" = "frontend" ]; then
@@ -31,7 +31,7 @@ do
         IP=$( aws ec2 describe-instances \
         --instance-ids $INSTANCEID \
         --query 'Reservations[0].Instances[0].PrivateIpAddress' \
-        --output text )  
+        --output text)  
         echo "PV ip is $IP" 
     
         RECORDNAME="$INSTANCENAME"."$DOMAIN"
